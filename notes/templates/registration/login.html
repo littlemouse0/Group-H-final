@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow rounded-4">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">登入 MyNote</h3>
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            請確認帳號與密碼正確。
+                        </div>
+                    {% endif %}
+                    <div class="mb-3">
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.password.label_tag }}
+                        {{ form.password }}
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">登入</button>
+                </form>
+                <div class="text-center mt-3">
+                    <a href="{% url 'register' %}">還沒有帳號？點此註冊</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

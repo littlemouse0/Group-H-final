@@ -1,0 +1,12 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow rounded-4 p-4">
+    <h3>新增資料夾</h3>
+    <form method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">建立</button>
+        <a href="{% url 'note_list' %}" class="btn btn-secondary">取消</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h3>{{ note.title }} 的版本記錄</h3>
+<ul class="list-group">
+    {% for version in versions %}
+        <li class="list-group-item">
+            <pre>{{ version.content }}</pre>
+            <small class="text-muted">{{ version.saved_at|date:"Y-m-d H:i" }}</small>
+        </li>
+    {% empty %}
+        <li class="list-group-item text-muted">尚無版本記錄</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'note_detail' note.pk %}" class="btn btn-secondary mt-3">返回筆記</a>
+{% endblock %}

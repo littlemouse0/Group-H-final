@@ -1,0 +1,46 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="mb-4">我的筆記</h3>
+
+<div class="mb-3 text-end">
+    <a href="{% url 'folder_list' %}" class="btn btn-outline-secondary">資料夾管理</a>
+</div>
+
+<form method="get" action="{% url 'search_notes' %}">
+    <div class="input-group mb-3">
+        <input type="text" name="q" placeholder="搜尋關鍵字..." class="form-control" />
+        <button class="btn btn-outline-secondary" type="submit">搜尋</button>
+    </div>
+</form>
+<div class="list-group">
+    {% for note in notes %}
+        <a href="{% url 'note_detail' note.pk %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            {{ note.title }}
+            <small class="text-muted">{{ note.updated_at|date:"Y-m-d H:i" }}</small>
+        </a>
+    {% empty %}
+        <p class="text-muted">目前尚無筆記。</p>
+    {% endfor %}
+
+
+<hr class="mt-5">
+<h4>其他使用者的公開筆記</h4>
+<ul class="list-group mt-3">
+  {% for note in others_notes %}
+    <li class="list-group-item">
+      <h5>{{ note.title }}</h5>
+      <p class="text-muted">作者：{{ note.owner.username }}　時間：{{ note.updated_at|date:"Y-m-d H:i" }}</p>
+      <p>{{ note.content|truncatechars:100 }}<br>
+        {% if note.editable %}
+        <a href="{% url 'note_edit' note.pk %}" class="btn btn-sm btn-outline-primary">編輯</a>
+        <a href="{% url 'note_clone' note.pk %}" class="btn btn-sm btn-outline-success">複製此筆記</a>
+      {% endif %}
+      </p>
+    </li>
+  {% empty %}
+    <li class="list-group-item text-muted">尚無其他公開筆記</li>
+  {% endfor %}
+</ul>
+</div>
+{% endblock %}

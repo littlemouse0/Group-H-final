@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>編輯筆記</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        請修正以下錯誤：
+        <ul>
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li>{{ field.label }}：{{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <div class="mb-3">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+    </div>
+    <div class="mb-3">
+      {{ form.content.label_tag }}
+      {{ form.content }}
+    </div>
+    <div class="mb-3">
+      {{ form.folder.label_tag }}
+      {{ form.folder }}
+    </div>
+
+    {% if is_create or note.owner == user %}
+      <div class="form-check mb-2">
+        {{ form.is_public }}
+        {{ form.is_public.label_tag }}
+      </div>
+      <div class="form-check mb-3">
+        {{ form.editable }} 
+        {{ form.editable.label_tag }}
+  </div>
+    {% endif %}
+
+
+    <button type="submit" class="btn btn-primary">儲存筆記</button>
+    <a href="{% url 'note_list' %}" class="btn btn-secondary">取消</a>
+  </form>
+</div>
+{% endblock %}

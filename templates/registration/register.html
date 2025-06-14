@@ -1,0 +1,27 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-4">
+                <h3 class="card-title text-center mb-4">註冊帳號</h3>
+                
+{% if form.errors %}
+  <div class="alert alert-danger">
+    ⚠️ 註冊失敗，請確認下方欄位錯誤，例如帳號已存在。
+  </div>
+{% endif %}
+<form method="post">
+{% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success w-100">註冊</button>
+                </form>
+                <div class="text-center mt-3">
+                    <a href="/accounts/login/">已經有帳號？登入</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

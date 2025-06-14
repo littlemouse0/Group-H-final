@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="mb-4">我的資料夾</h3>
+<a href="{% url 'folder_create' %}" class="btn btn-primary mb-3">新增資料夾</a>
+<ul class="list-group">
+    {% for folder in folders %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ folder.name }}
+        <a href="{% url 'folder_delete' folder.pk %}" class="btn btn-sm btn-outline-danger">刪除</a>
+    </li>
+    {% empty %}
+    <li class="list-group-item text-muted">尚未建立任何資料夾</li>
+    {% endfor %}
+</ul>
+{% endblock %}
